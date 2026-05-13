@@ -1,0 +1,20 @@
+{
+    "主界面_检测邮件红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 50,
+        "roi": [0, 0, 200, 100],
+        "action": "DoNothing",
+        "next": ["邮件_入口"],
+        "on_error": ["主界面检测"]
+    },
+    
+    "主界面_打开邮件": {
+        "recognition": "TemplateMatch",
+        "template": "mail/mail_icon.png",
+        "action": "Click",
+        "next": ["邮件_检测界面"]
+    }
+}

@@ -1,0 +1,138 @@
+{
+    "检查游戏状态": {
+        "recognition": "OCR",
+        "expected": "第七史诗|Epic Seven",
+        "next": ["主界面检测", "检查游戏状态"]
+    },
+    
+    "主界面检测": {
+        "recognition": "TemplateMatch",
+        "template": "main_menu/home.png",
+        "action": "DoNothing",
+        "next": ["主界面_检测邮件红点", "主界面_检测商店红点", "主界面_检测圣域红点", "进入战斗", "领取奖励"]
+    },
+    
+    "主界面_检测圣域红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 30,
+        "roi": [0, 0, 600, 100],
+        "action": "DoNothing",
+        "next": ["圣域_入口"],
+        "on_error": ["主界面检测"]
+    },
+    
+    "主界面_检测商店红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 50,
+        "roi": [0, 0, 400, 100],
+        "action": "DoNothing",
+        "next": ["商店_入口"],
+        "on_error": ["主界面检测"]
+    },
+    
+    "进入战斗": {
+        "recognition": "TemplateMatch",
+        "template": "main_menu/battle_btn.png",
+        "action": "Click",
+        "next": ["选择副本"]
+    },
+    
+    "选择副本": {
+        "recognition": "OCR",
+        "expected": "冒险|讨伐|深渊",
+        "action": "DoNothing",
+        "next": ["选择冒险", "选择讨伐", "选择深渊"]
+    },
+    
+    "选择冒险": {
+        "recognition": "OCR",
+        "expected": "冒险",
+        "action": "Click",
+        "next": ["选择关卡"]
+    },
+    
+    "选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "stage/select.png",
+        "action": "Click",
+        "next": ["开始战斗"]
+    },
+    
+    "开始战斗": {
+        "recognition": "TemplateMatch",
+        "template": "battle/start_btn.png",
+        "action": "Click",
+        "next": ["检测自动战斗", "开始战斗"]
+    },
+    
+    "检测自动战斗": {
+        "recognition": "TemplateMatch",
+        "template": "battle/auto_btn_off.png",
+        "action": "Click",
+        "next": ["等待战斗结束"]
+    },
+    
+    "等待战斗结束": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": "战斗胜利|胜利"
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": "battle/victory.png"
+            }
+        ],
+        "timeout": 300000,
+        "next": ["点击继续"]
+    },
+    
+    "点击继续": {
+        "recognition": "TemplateMatch",
+        "template": "battle/continue_btn.png",
+        "action": "Click",
+        "next": ["领取奖励"]
+    },
+    
+    "领取奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["主界面检测"]
+    },
+    
+    "选择讨伐": {
+        "recognition": "OCR",
+        "expected": "讨伐",
+        "action": "Click",
+        "next": ["选择讨伐关卡"]
+    },
+    
+    "选择深渊": {
+        "recognition": "OCR",
+        "expected": "深渊",
+        "action": "Click",
+        "next": ["选择深渊关卡"]
+    },
+    
+    "选择讨伐关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/select.png",
+        "action": "Click",
+        "next": ["开始战斗"]
+    },
+    
+    "选择深渊关卡": {
+        "recognition": "TemplateMatch",
+        "template": "abyss/select.png",
+        "action": "Click",
+        "next": ["开始战斗"]
+    }
+}

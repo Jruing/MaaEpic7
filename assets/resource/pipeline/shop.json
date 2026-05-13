@@ -1,0 +1,135 @@
+{
+    "商店_入口": {
+        "recognition": "TemplateMatch",
+        "template": "shop/shop_icon.png",
+        "action": "Click",
+        "next": ["商店_检测界面"]
+    },
+    
+    "商店_检测界面": {
+        "recognition": "OCR",
+        "expected": "商店|商城|Shop",
+        "action": "DoNothing",
+        "next": ["商店_检测免费标签"]
+    },
+    
+    "商店_检测免费标签": {
+        "recognition": "TemplateMatch",
+        "template": "shop/free_tab.png",
+        "action": "Click",
+        "next": ["商店_检测免费商品"],
+        "on_error": ["商店_滑动查找免费"]
+    },
+    
+    "商店_滑动查找免费": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "next": ["商店_检测免费标签"]
+    },
+    
+    "商店_检测免费商品": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "shop/free_item.png"
+            },
+            {
+                "recognition": "OCR",
+                "expected": "免费|FREE|0"
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["商店_点击免费商品"],
+        "on_error": ["商店_无免费商品"]
+    },
+    
+    "商店_点击免费商品": {
+        "recognition": "TemplateMatch",
+        "template": "shop/free_item.png",
+        "action": "Click",
+        "next": ["商店_确认购买"]
+    },
+    
+    "商店_确认购买": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "shop/buy_btn.png"
+            },
+            {
+                "recognition": "OCR",
+                "expected": "购买|确认"
+            }
+        ],
+        "action": "Click",
+        "next": ["商店_等待购买结果"]
+    },
+    
+    "商店_等待购买结果": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "reward/reward_popup.png"
+            },
+            {
+                "recognition": "OCR",
+                "expected": "获得|购买成功"
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["商店_确认奖励"],
+        "timeout": 5000
+    },
+    
+    "商店_确认奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["商店_检测还有免费"]
+    },
+    
+    "商店_检测还有免费": {
+        "recognition": "TemplateMatch",
+        "template": "shop/free_item.png",
+        "action": "DoNothing",
+        "next": ["商店_点击免费商品"],
+        "on_error": ["商店_滑动检测免费"]
+    },
+    
+    "商店_滑动检测免费": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "repeat": 3,
+        "next": ["商店_检测免费商品"]
+    },
+    
+    "商店_无免费商品": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["商店_关闭界面"]
+    },
+    
+    "商店_关闭界面": {
+        "recognition": "TemplateMatch",
+        "template": "common/close_btn.png",
+        "action": "Click",
+        "next": []
+    },
+    
+    "商店_购买失败": {
+        "recognition": "OCR",
+        "expected": "失败|错误|不足",
+        "action": "Click",
+        "target": [640, 400],
+        "next": ["商店_关闭界面"]
+    }
+}

@@ -1,0 +1,174 @@
+{
+    "圣域_入口": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/sanctuary_icon.png",
+        "action": "Click",
+        "next": ["圣域_检测界面"]
+    },
+    
+    "圣域_检测界面": {
+        "recognition": "OCR",
+        "expected": "圣域|圣所|Sanctuary",
+        "action": "DoNothing",
+        "next": ["圣域_检测红点"]
+    },
+    
+    "圣域_检测红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 30,
+        "action": "DoNothing",
+        "next": ["圣域_查找可领取"],
+        "on_error": ["圣域_无奖励"]
+    },
+    
+    "圣域_查找可领取": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "sanctuary/claim_icon.png"
+            },
+            {
+                "recognition": "OCR",
+                "expected": "领取|收获|收获全部"
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["圣域_点击领取", "圣域_滑动查找"]
+    },
+    
+    "圣域_滑动查找": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "next": ["圣域_查找可领取"],
+        "on_error": ["圣域_无奖励"]
+    },
+    
+    "圣域_点击领取": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/claim_icon.png",
+        "action": "Click",
+        "next": ["圣域_等待奖励"]
+    },
+    
+    "圣域_等待奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/reward_popup.png",
+        "action": "DoNothing",
+        "next": ["圣域_确认奖励"],
+        "timeout": 5000
+    },
+    
+    "圣域_确认奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["圣域_检测还有奖励"]
+    },
+    
+    "圣域_检测还有奖励": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "sanctuary/claim_icon.png"
+            },
+            {
+                "recognition": "ColorMatch",
+                "method": 4,
+                "lower": [200, 50, 50],
+                "upper": [255, 100, 100],
+                "count": 30
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["圣域_点击领取"],
+        "on_error": ["圣域_滑动检测奖励"]
+    },
+    
+    "圣域_滑动检测奖励": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "repeat": 2,
+        "next": ["圣域_查找可领取"]
+    },
+    
+    "圣域_无奖励": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["圣域_关闭界面"]
+    },
+    
+    "圣域_关闭界面": {
+        "recognition": "TemplateMatch",
+        "template": "common/close_btn.png",
+        "action": "Click",
+        "next": []
+    },
+    
+    "圣域_一键收获": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/claim_all_btn.png",
+        "action": "Click",
+        "next": ["圣域_等待奖励"]
+    },
+    
+    "圣域_检测一键收获": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/claim_all_btn.png",
+        "action": "DoNothing",
+        "next": ["圣域_一键收获"],
+        "on_error": ["圣域_查找可领取"]
+    },
+    
+    "圣域_精灵之家": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/spirit_house.png",
+        "action": "Click",
+        "next": ["圣域_精灵之家领取"]
+    },
+    
+    "圣域_精灵之家领取": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/spirit_claim.png",
+        "action": "Click",
+        "next": ["圣域_等待奖励"]
+    },
+    
+    "圣域_心脏": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/heart.png",
+        "action": "Click",
+        "next": ["圣域_心脏领取"]
+    },
+    
+    "圣域_心脏领取": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/heart_claim.png",
+        "action": "Click",
+        "next": ["圣域_等待奖励"]
+    },
+    
+    "圣域_高塔": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/tower.png",
+        "action": "Click",
+        "next": ["圣域_高塔领取"]
+    },
+    
+    "圣域_高塔领取": {
+        "recognition": "TemplateMatch",
+        "template": "sanctuary/tower_claim.png",
+        "action": "Click",
+        "next": ["圣域_等待奖励"]
+    }
+}

@@ -1,0 +1,71 @@
+{
+    "讨伐_水龙_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/wyvern_icon.png",
+        "action": "Click",
+        "next": ["讨伐_水龙_选择关卡"]
+    },
+    
+    "讨伐_水龙_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/wyvern_stage_13.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_木妖_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/banshee_icon.png",
+        "action": "Click",
+        "next": ["讨伐_木妖_选择关卡"]
+    },
+    
+    "讨伐_木妖_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/banshee_stage_13.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_火魔像_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/golem_icon.png",
+        "action": "Click",
+        "next": ["讨伐_火魔像_选择关卡"]
+    },
+    
+    "讨伐_火魔像_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/golem_stage_13.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_光暗_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/azimanus_icon.png",
+        "action": "Click",
+        "next": ["讨伐_光暗_选择关卡"]
+    },
+    
+    "讨伐_光暗_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/azimanus_stage_13.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_暗龙_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/caides_icon.png",
+        "action": "Click",
+        "next": ["讨伐_暗龙_选择关卡"]
+    },
+    
+    "讨伐_暗龙_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/caides_stage_13.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    }
+}

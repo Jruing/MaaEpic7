@@ -1,0 +1,185 @@
+{
+    "讨伐_入口": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/hunt_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测界面"]
+    },
+    
+    "讨伐_检测界面": {
+        "recognition": "OCR",
+        "expected": "讨伐|Hunt",
+        "action": "DoNothing",
+        "next": ["讨伐_选择属性"]
+    },
+    
+    "讨伐_选择属性": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["讨伐_选择水", "讨伐_选择木", "讨伐_选择火", "讨伐_选择光", "讨伐_选择暗"]
+    },
+    
+    "讨伐_选择水": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/wyvern_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测关卡列表"],
+        "on_error": ["讨伐_选择木"]
+    },
+    
+    "讨伐_选择木": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/banshee_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测关卡列表"],
+        "on_error": ["讨伐_选择火"]
+    },
+    
+    "讨伐_选择火": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/golem_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测关卡列表"],
+        "on_error": ["讨伐_选择光"]
+    },
+    
+    "讨伐_选择光": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/azimanus_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测关卡列表"],
+        "on_error": ["讨伐_选择暗"]
+    },
+    
+    "讨伐_选择暗": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/caides_icon.png",
+        "action": "Click",
+        "next": ["讨伐_检测关卡列表"],
+        "on_error": ["讨伐_关闭界面"]
+    },
+    
+    "讨伐_检测关卡列表": {
+        "recognition": "OCR",
+        "expected": "阶段|Stage|11|12|13",
+        "action": "DoNothing",
+        "next": ["讨伐_选择关卡"]
+    },
+    
+    "讨伐_选择关卡": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/stage_select.png",
+        "action": "Click",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_开始战斗": {
+        "recognition": "TemplateMatch",
+        "template": "battle/start_btn.png",
+        "action": "Click",
+        "next": ["讨伐_检测自动战斗"]
+    },
+    
+    "讨伐_检测自动战斗": {
+        "recognition": "TemplateMatch",
+        "template": "battle/auto_btn_off.png",
+        "action": "Click",
+        "next": ["讨伐_等待战斗结束"],
+        "on_error": ["讨伐_等待战斗结束"]
+    },
+    
+    "讨伐_等待战斗结束": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "OCR",
+                "expected": "战斗胜利|胜利"
+            },
+            {
+                "recognition": "TemplateMatch",
+                "template": "battle/victory.png"
+            }
+        ],
+        "timeout": 300000,
+        "next": ["讨伐_点击继续"],
+        "on_error": ["讨伐_战斗失败"]
+    },
+    
+    "讨伐_点击继续": {
+        "recognition": "TemplateMatch",
+        "template": "battle/continue_btn.png",
+        "action": "Click",
+        "next": ["讨伐_领取奖励"]
+    },
+    
+    "讨伐_领取奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["讨伐_检测重复挑战"]
+    },
+    
+    "讨伐_检测重复挑战": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/repeat_btn.png",
+        "action": "DoNothing",
+        "next": ["讨伐_重复挑战"],
+        "on_error": ["讨伐_返回关卡列表"]
+    },
+    
+    "讨伐_重复挑战": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/repeat_btn.png",
+        "action": "Click",
+        "next": ["讨伐_确认重复"]
+    },
+    
+    "讨伐_确认重复": {
+        "recognition": "TemplateMatch",
+        "template": "hunt/confirm_repeat.png",
+        "action": "Click",
+        "next": ["讨伐_检测自动战斗"]
+    },
+    
+    "讨伐_返回关卡列表": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [50, 50],
+        "next": ["讨伐_检测关卡列表"]
+    },
+    
+    "讨伐_战斗失败": {
+        "recognition": "OCR",
+        "expected": "失败|重试",
+        "action": "Click",
+        "target": [640, 500],
+        "next": ["讨伐_返回关卡列表"]
+    },
+    
+    "讨伐_关闭界面": {
+        "recognition": "TemplateMatch",
+        "template": "common/close_btn.png",
+        "action": "Click",
+        "next": []
+    },
+    
+    "讨伐_检测体力": {
+        "recognition": "OCR",
+        "expected": "体力|能量",
+        "action": "DoNothing",
+        "next": ["讨伐_检查体力充足"],
+        "on_error": ["讨伐_体力不足"]
+    },
+    
+    "讨伐_检查体力充足": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["讨伐_开始战斗"]
+    },
+    
+    "讨伐_体力不足": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["讨伐_关闭界面"]
+    }
+}

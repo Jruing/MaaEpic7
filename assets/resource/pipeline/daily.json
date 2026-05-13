@@ -1,0 +1,195 @@
+{
+    "日常_入口": {
+        "recognition": "TemplateMatch",
+        "template": "daily/daily_icon.png",
+        "action": "Click",
+        "next": ["日常_检测界面"]
+    },
+    
+    "日常_检测界面": {
+        "recognition": "OCR",
+        "expected": "日常|任务|每日|Daily",
+        "action": "DoNothing",
+        "next": ["日常_检测红点"]
+    },
+    
+    "日常_检测红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 30,
+        "action": "DoNothing",
+        "next": ["日常_查找可领取"],
+        "on_error": ["日常_无奖励"]
+    },
+    
+    "日常_查找可领取": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "daily/claim_icon.png"
+            },
+            {
+                "recognition": "OCR",
+                "expected": "领取|完成|奖励"
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["日常_点击领取", "日常_滑动查找"]
+    },
+    
+    "日常_滑动查找": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "next": ["日常_查找可领取"],
+        "on_error": ["日常_无奖励"]
+    },
+    
+    "日常_点击领取": {
+        "recognition": "TemplateMatch",
+        "template": "daily/claim_icon.png",
+        "action": "Click",
+        "next": ["日常_等待奖励"]
+    },
+    
+    "日常_等待奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/reward_popup.png",
+        "action": "DoNothing",
+        "next": ["日常_确认奖励"],
+        "timeout": 5000
+    },
+    
+    "日常_确认奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["日常_检测还有奖励"]
+    },
+    
+    "日常_检测还有奖励": {
+        "recognition": "Or",
+        "any_of": [
+            {
+                "recognition": "TemplateMatch",
+                "template": "daily/claim_icon.png"
+            },
+            {
+                "recognition": "ColorMatch",
+                "method": 4,
+                "lower": [200, 50, 50],
+                "upper": [255, 100, 100],
+                "count": 30
+            }
+        ],
+        "action": "DoNothing",
+        "next": ["日常_点击领取"],
+        "on_error": ["日常_滑动检测奖励"]
+    },
+    
+    "日常_滑动检测奖励": {
+        "recognition": "DirectHit",
+        "action": "Swipe",
+        "begin": [640, 500],
+        "end": [640, 200],
+        "duration": 300,
+        "repeat": 2,
+        "next": ["日常_查找可领取"]
+    },
+    
+    "日常_无奖励": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": ["日常_检测宝箱"]
+    },
+    
+    "日常_检测宝箱": {
+        "recognition": "TemplateMatch",
+        "template": "daily/treasure_box.png",
+        "action": "DoNothing",
+        "next": ["日常_点击宝箱"],
+        "on_error": ["日常_关闭界面"]
+    },
+    
+    "日常_点击宝箱": {
+        "recognition": "TemplateMatch",
+        "template": "daily/treasure_box.png",
+        "action": "Click",
+        "next": ["日常_等待宝箱奖励"]
+    },
+    
+    "日常_等待宝箱奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/reward_popup.png",
+        "action": "DoNothing",
+        "next": ["日常_确认宝箱奖励"],
+        "timeout": 5000
+    },
+    
+    "日常_确认宝箱奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["日常_检测下一个宝箱"]
+    },
+    
+    "日常_检测下一个宝箱": {
+        "recognition": "TemplateMatch",
+        "template": "daily/treasure_box.png",
+        "action": "DoNothing",
+        "next": ["日常_点击宝箱"],
+        "on_error": ["日常_关闭界面"]
+    },
+    
+    "日常_关闭界面": {
+        "recognition": "TemplateMatch",
+        "template": "common/close_btn.png",
+        "action": "Click",
+        "next": []
+    },
+    
+    "日常_一键领取": {
+        "recognition": "TemplateMatch",
+        "template": "daily/claim_all_btn.png",
+        "action": "Click",
+        "next": ["日常_等待奖励"]
+    },
+    
+    "日常_检测一键领取": {
+        "recognition": "TemplateMatch",
+        "template": "daily/claim_all_btn.png",
+        "action": "DoNothing",
+        "next": ["日常_一键领取"],
+        "on_error": ["日常_查找可领取"]
+    },
+    
+    "日常_任务进度": {
+        "recognition": "OCR",
+        "expected": "\\d+/\\d+",
+        "action": "DoNothing",
+        "next": ["日常_检测红点"]
+    },
+    
+    "日常_周常检测": {
+        "recognition": "TemplateMatch",
+        "template": "daily/weekly_tab.png",
+        "action": "Click",
+        "next": ["日常_检测周常红点"]
+    },
+    
+    "日常_检测周常红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 30,
+        "action": "DoNothing",
+        "next": ["日常_查找可领取"],
+        "on_error": ["日常_关闭界面"]
+    }
+}

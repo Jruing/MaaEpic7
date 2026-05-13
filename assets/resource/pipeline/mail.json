@@ -1,0 +1,108 @@
+{
+    "邮件_入口": {
+        "recognition": "TemplateMatch",
+        "template": "mail/mail_icon.png",
+        "action": "Click",
+        "next": ["邮件_检测红点", "邮件_检测界面"]
+    },
+    
+    "邮件_检测红点": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 50,
+        "roi": [0, 0, 200, 100],
+        "action": "DoNothing",
+        "next": ["邮件_点击入口"],
+        "on_error": ["邮件_无新邮件"]
+    },
+    
+    "邮件_点击入口": {
+        "recognition": "TemplateMatch",
+        "template": "mail/mail_icon.png",
+        "action": "Click",
+        "next": ["邮件_检测界面"]
+    },
+    
+    "邮件_检测界面": {
+        "recognition": "OCR",
+        "expected": "邮件|收件箱|领取",
+        "action": "DoNothing",
+        "next": ["邮件_一键领取", "邮件_逐个领取"]
+    },
+    
+    "邮件_一键领取": {
+        "recognition": "TemplateMatch",
+        "template": "mail/claim_all_btn.png",
+        "action": "Click",
+        "next": ["邮件_确认领取", "邮件_逐个领取"]
+    },
+    
+    "邮件_确认领取": {
+        "recognition": "TemplateMatch",
+        "template": "mail/confirm_btn.png",
+        "action": "Click",
+        "next": ["邮件_等待奖励", "邮件_检测界面"]
+    },
+    
+    "邮件_等待奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/reward_popup.png",
+        "action": "DoNothing",
+        "next": ["邮件_点击确认奖励"],
+        "timeout": 5000
+    },
+    
+    "邮件_点击确认奖励": {
+        "recognition": "TemplateMatch",
+        "template": "reward/confirm_btn.png",
+        "action": "Click",
+        "next": ["邮件_检测还有邮件", "邮件_完成"]
+    },
+    
+    "邮件_检测还有邮件": {
+        "recognition": "ColorMatch",
+        "method": 4,
+        "lower": [200, 50, 50],
+        "upper": [255, 100, 100],
+        "count": 50,
+        "action": "DoNothing",
+        "next": ["邮件_一键领取"],
+        "on_error": ["邮件_完成"]
+    },
+    
+    "邮件_逐个领取": {
+        "recognition": "TemplateMatch",
+        "template": "mail/mail_item.png",
+        "action": "Click",
+        "next": ["邮件_领取单个", "邮件_完成"]
+    },
+    
+    "邮件_领取单个": {
+        "recognition": "TemplateMatch",
+        "template": "mail/claim_btn.png",
+        "action": "Click",
+        "next": ["邮件_等待奖励"]
+    },
+    
+    "邮件_无新邮件": {
+        "recognition": "DirectHit",
+        "action": "DoNothing",
+        "next": []
+    },
+    
+    "邮件_完成": {
+        "recognition": "DirectHit",
+        "action": "Click",
+        "target": [50, 50],
+        "next": []
+    },
+    
+    "邮件_关闭界面": {
+        "recognition": "TemplateMatch",
+        "template": "common/close_btn.png",
+        "action": "Click",
+        "next": []
+    }
+}

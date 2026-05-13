@@ -1,0 +1,59 @@
+{
+    "controller": [
+        {
+            "name": "ADB",
+            "type": "Adb",
+            "adb_path": "adb",
+            "address": "127.0.0.1:5555",
+            "config": {}
+        }
+    ],
+    "resource": [
+        {
+            "name": "EpicSeven",
+            "path": "./assets/resource"
+        }
+    ],
+    "task": [
+        {
+            "name": "日常任务",
+            "entry": "日常_入口"
+        },
+        {
+            "name": "邮件领取",
+            "entry": "邮件_入口"
+        },
+        {
+            "name": "商店免费商品",
+            "entry": "商店_入口"
+        },
+        {
+            "name": "圣域奖励",
+            "entry": "圣域_入口"
+        },
+        {
+            "name": "讨伐副本",
+            "entry": "讨伐_入口"
+        },
+        {
+            "name": "水龙讨伐",
+            "entry": "讨伐_水龙_入口"
+        },
+        {
+            "name": "木妖讨伐",
+            "entry": "讨伐_木妖_入口"
+        },
+        {
+            "name": "火魔像讨伐",
+            "entry": "讨伐_火魔像_入口"
+        },
+        {
+            "name": "光暗讨伐",
+            "entry": "讨伐_光暗_入口"
+        },
+        {
+            "name": "暗龙讨伐",
+            "entry": "讨伐_暗龙_入口"
+        }
+    ]
+}
